@@ -1,0 +1,1704 @@
+MAP 
+NAME RU 
+STATUS on 
+SIZE 3100 2600 
+UNITS meters 
+IMAGECOLOR 255 255 255 
+FONTSET"fonts/fontset.txt" 
+OUTPUTFORMAT 
+NAME jpg 
+DRIVER "GD/JPEG" 
+MIMETYPE "image/jpeg" 
+IMAGEMODE RGB 
+EXTENSION "jpeg" 
+FORMATOPTION "INTERLACE=OFF" 
+FORMATOPTION "QUALITY=75" 
+END 
+OUTPUTFORMAT
+    NAME 'AGG'
+    DRIVER AGG/jpeg
+    IMAGEMODE RGB
+END
+OUTPUTFORMAT 
+NAME png 
+DRIVER "GD/PNG" 
+MIMETYPE "image/png" 
+IMAGEMODE RGB 
+EXTENSION "png" 
+FORMATOPTION "INTERLACE=OFF" 
+FORMATOPTION "QUALITY=100" 
+END 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+WEB 
+TEMPLATE capm_svg.php 
+IMAGEPATH "/home/sig/gismeaux/application/tmp/" 
+IMAGEURL "/tmp/" 
+LOG /home/sig/gismeaux/application/tmp/mapserver.log 
+END 
+#BIBLIO_SYMBOLE# 
+SYMBOL 
+NAME 'circle' 
+TYPE ELLIPSE 
+POINTS 1 1 END 
+FILLED false 
+END 
+SYMBOL 
+NAME 'agrille' 
+TYPE vector 
+POINTS 
+#rect 
+0.1 0 
+0.1 0.65 
+0.9 0.65 
+0.9 0 
+0.1 0 
+-99 -99 
+#cercle 
+0.5 0.05 
+0.4 0.075 
+0.35 0.125 
+0.325 0.225 
+0.35 0.325 
+0.4 0.375 
+0.5 0.4 
+0.6 0.375 
+0.625 0.325 
+0.675 0.225 
+0.6 0.075 
+0.5 0.05 
+-99 -99 
+#demi cercle 
+0.1 0.65 
+0.25 0.55 
+0.5 0.5 
+0.75 0.55 
+0.9 0.65 
+-99 -99 
+#rect grille 
+0.3 0.65 
+0.3 1 
+0.7 1 
+0.7 0.65 
+-99 -99 
+#ligne grille 
+0.325 0.725 
+0.675 0.725 
+-99 -99 
+0.325 0.825 
+0.675 0.825 
+-99 -99 
+0.325 0.925 
+0.675 0.925 
+-99 -99 
+END 
+FILLed false 
+end 
+SYMBOL 
+NAME 'avaloir' 
+TYPE vector 
+POINTS 
+0 0 
+0 1 
+1 1 
+1 0 
+0 0 
+-99 -99 
+0 1  
+0.25 0.87 
+0.5 0.80 
+0.75 0.87 
+1 1 
+-99 -99 
+0.5 0.1 
+0.35 0.15 
+0.28 0.25 
+0.25 0.35 
+0.28 0.45 
+0.35 0.55 
+0.5 0.6 
+0.65 0.55 
+0.72 0.45 
+0.75 0.35 
+0.72 0.25 
+0.65 0.15 
+0.5 0.1 
+END 
+FILLED false 
+END 
+SYMBOL 
+NAME 'carre' 
+TYPE vector 
+POINTS 
+0 0 
+0 1 
+1 1 
+1 0 
+0 0 
+END 
+FILLed false 
+end 
+SYMBOL 
+NAME 'croix' 
+TYPE vector 
+POINTS 
+0 0 
+1 1 
+-99 -99 
+0 1 
+1 0 
+END 
+end 
+SYMBOL 
+NAME 'grille' 
+TYPE vector 
+POINTS 
+0 0 
+0 1 
+1 1 
+1 0 
+0 0 
+-99 -99  
+0 0.75 
+1 0.75 
+-99 -99 
+0 0.5 
+1 0.5 
+-99 -99 
+0 0.25 
+1 0.25 
+END 
+end  
+SYMBOL 
+NAME 'regard' 
+TYPE ELLIPSE 
+POINTS 1 1 END 
+FILLED TRUE 
+END 
+LAYER 
+NAME "ortho-photo" group "ortho-photo" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE raster 
+MAXSCALE 13830 
+MINSCALE 345 
+TILEINDEX "/home/sig/carte/script_tile_orthos/doq.shp" 
+TILEITEM "location" 
+END 
+ 
+ LAYER 
+CONNECTIONTYPE postgis 
+NAME "zac" group "zac" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zac using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 218 134 36 
+END 
+TRANSPARENCY 100 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Zone_non-aedificandi" group "Zone_non-aedificandi" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zononaedificandi using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 128 0 128 
+OUTLINECOLOR 128 0 128 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Radio_electrique" group "Radio_electrique" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.servradioelectrik using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 83 131 242 
+OUTLINECOLOR 83 131 242 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Risque_technologique" group "Risque_technologique" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.sidobre using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 255 0 0 
+END 
+TRANSPARENCY 100 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "PPMH" group "PPMH" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppmh using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 163 71 156 
+OUTLINECOLOR 163 71 156 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Lotissement" group "Lotissement" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.lotissement using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 205 177 82 
+OUTLINECOLOR 205 177 82 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Lisiere" group "Lisiere" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.lisiere using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 50 164 21 
+OUTLINECOLOR 50 164 21 
+END 
+END 
+
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "pprt" group "pprt" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.vpprt using unique gid" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 255 0 0 
+OUTLINECOLOR 0 0 0 
+END 
+TRANSPARENCY 100 
+END
+
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_bleu_clair" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone bleu clair') 
+COLOR 0 186 243 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_bleu_fonce" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone bleu fonce') 
+COLOR 28 29 131 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_boucle_nord_de_la_marne" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone boucle nord de la marne') 
+OUTLINECOLOR 229 0 199 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_enjeu_strategique_nationale" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone enjeu strategique nationale') 
+COLOR 84 100 150 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_jaune_clair" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone jaune clair') 
+COLOR 255 255 159 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_jaune_fonce" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone jaune fonce') 
+COLOR 255 199 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_marron" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone marron') 
+COLOR 201 128 60 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_rouge" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone rouge') 
+COLOR 255 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "zone_verte" group "PPR_inondation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.ppri2 using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom_zr]' eq 'zone verte') 
+COLOR 101 198 63 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Site_inscrit" group "Site_inscrit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.siteinscrit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 217 95 231 
+OUTLINECOLOR 217 95 231 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Emplacement_reserve" group "Emplacement_reserve" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.emplreserve using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 136 213 217 
+OUTLINECOLOR 136 213 217 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Cimetiere" group "Cimetiere" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.cimetiere using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 252 247 35 
+OUTLINECOLOR 252 247 35 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "1" group "Zone_archeo" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.z_archeo using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom]' eq '1') 
+COLOR 215 99 50 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "2" group "Zone_archeo" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.z_archeo using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[nom]' eq '2') 
+COLOR 251 243 96 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Espace_Boise_classe" group "Espace_Boise_classe" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zoneboise using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 0 128 0 
+OUTLINECOLOR 0 0 0 
+END 
+TRANSPARENCY 100 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Route_1" group "Zone_de_bruit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonebruit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[type]' eq '1_route') 
+COLOR 131 79 189 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "SNCF" group "Zone_de_bruit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonebruit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[type]' eq '1_sncf') 
+COLOR 111 62 162 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Route_2" group "Zone_de_bruit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonebruit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[type]' eq '2_route') 
+COLOR 156 115 202 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Route_3" group "Zone_de_bruit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonebruit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[type]' eq '3_route') 
+COLOR 204 183 227 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Route_4" group "Zone_de_bruit" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonebruit using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[type]' eq '4_route') 
+COLOR 183 152 216 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUB" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUB') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUCa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUCa') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUCb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUCb') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUD" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUD') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUE" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUE') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUXa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUXa') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUXb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUXb') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "N" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'N') 
+COLOR 9 208 18 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NAa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NAa') 
+COLOR 41 138 28 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NAd" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NAd') 
+COLOR 64 210 43 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NAv" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NAv') 
+COLOR 0 255 0 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NAxb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NAxb') 
+COLOR 82 180 35 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NAxc" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NAxc') 
+COLOR 105 216 52 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NBa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NBa') 
+COLOR 90 147 28 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NBb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NBb') 
+COLOR 108 177 33 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NBc" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NBc') 
+COLOR 125 204 38 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NBd" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NBd') 
+COLOR 151 221 74 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NCa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NCa') 
+COLOR 100 122 22 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NCb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NCb') 
+COLOR 125 154 29 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NCc" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NCc') 
+COLOR 174 214 39 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NDa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NDa') 
+COLOR 28 157 73 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NDb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NDb') 
+COLOR 34 189 88 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NDc" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NDc') 
+COLOR 58 220 115 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "NL" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'NL') 
+COLOR 134 219 168 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UA" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UA') 
+COLOR 186 157 114 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UAa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UAa') 
+COLOR 215 134 100 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UAb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UAb') 
+COLOR 171 158 143 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UB" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UB') 
+COLOR 188 157 84 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UBa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UBa') 
+COLOR 213 150 19 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UBb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UBb') 
+COLOR 219 111 13 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UCa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UCa') 
+COLOR 238 250 12 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UCb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UCb') 
+COLOR 251 254 129 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UD" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UD') 
+COLOR 219 194 53 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UFa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UFa') 
+COLOR 214 101 171 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UFb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UFb') 
+COLOR 224 141 193 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UG" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UG') 
+COLOR 62 121 221 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UGa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UGa') 
+COLOR 111 155 230 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UGb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UGb') 
+COLOR 154 185 237 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UL" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UL') 
+COLOR 115 249 121 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UV" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UV') 
+COLOR 251 170 239 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UVa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UVa') 
+COLOR 165 0 165 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UXa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UXa') 
+COLOR 170 6 183 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UXb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UXb') 
+COLOR 236 207 239 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UXc" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UXc') 
+COLOR 209 138 217 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UY" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UY') 
+COLOR 255 127 127 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UZa" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UZa') 
+COLOR 182 203 209 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "UZb" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'UZb') 
+COLOR 182 203 209 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "AUC" group "zonage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.zonage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[zone]' eq 'AUC') 
+COLOR 120 234 243 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Bati_dur" group "batiment" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from cadastre.batiment using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[constructi]' eq 'Bati dur') 
+COLOR 184 84 149 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Bati_leger" group "batiment" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from cadastre.batiment using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+EXPRESSION ('[constructi]' eq 'Bati leger') 
+COLOR 221 174 205 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "parcelle" group "parcelle" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from cadastre.parcelle using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+COLOR 255 128 0 
+OUTLINECOLOR 0 0 0 
+END 
+TRANSPARENCY 5 
+END 
+
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "parcelle" group "parcelle" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from cadastre.parcelle using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "identifian in %parce%" 
+LABELITEM identifian 
+CLASS 
+COLOR 150 254 150 
+LABEL 
+TYPE truetype 
+ANTIALIAS true 
+FONT "arial" 
+POSITION cc 
+size 10 
+END 
+END 
+TRANSPARENCY 70 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "alignement" group "alignement" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.alignement using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE line 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+OUTLINECOLOR 255 0 0 
+symbol "circle" 
+SIZE 1 
+END 
+TRANSPARENCY 100 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "Chemin_de_halage" group "Chemin_de_halage" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from geotest.halage using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:LAMB1" 
+END 
+TYPE line 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+OUTLINECOLOR 126 238 111 
+symbol "circle" 
+SIZE 10 
+END 
+TRANSPARENCY 100 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "parcelle" group "parcelle" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom from cadastre.parcelle using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE polygon 
+FILTER "code_insee like '%insee%%' or code_insee is null" 
+CLASS 
+OUTLINECOLOR 0 0 0 
+END 
+END 
+ 
+LAYER 
+CONNECTIONTYPE postgis 
+NAME "cotation" group "cotation" 
+CONNECTION "user=%user% password=%password% dbname=%dbname% host=%host%" 
+DATA "the_geom FROM admin_svg.temp_cotation using unique the_geom" 
+STATUS on 
+PROJECTION 
+"init=IGNF:RGF93CC49" 
+END 
+TYPE line 
+FILTER "session_temp like '%sess%'" 
+LABELITEM valeur 
+CLASS 
+EXPRESSION ('[type]' eq 'line') 
+LABEL 
+COLOR 255 0 0 
+ANGLE auto 
+TYPE truetype 
+ANTIALIAS true 
+FONT "arial" 
+POSITION uc 
+MINSIZE 10 
+MAXSIZE 15 
+END 
+OUTLINECOLOR  0 0 255 
+END 
+CLASS 
+EXPRESSION ('[type]' eq 'fleche') 
+OUTLINECOLOR 255 0 0 
+END 
+END 
+END

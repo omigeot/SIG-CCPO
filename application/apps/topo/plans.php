@@ -39,7 +39,7 @@ $insee = $_SESSION['profil']->insee;
 $appli = $_SESSION['profil']->appli;
 
 if ((!$_SESSION['profil']->acces_ssl) || !in_array ("Plan geometre", $_SESSION['profil']->liste_appli)){
-	die("Point d'entr√©e r√©glement√©.<br> Acc√®s interdit. <br>Veuillez vous connecter via <a href=\"https://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('https://".$_SERVER['HTTP_HOST']."')\",10000)</SCRIPT>");
+	die("Point d'entr√©e r√©glement√©.<br> Acc√®s interdit. <br>Veuillez vous connecter via <a href=\"http://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('http://".$_SERVER['HTTP_HOST']."')\",10000)</SCRIPT>");
 }
 //session_start();
 //include('../connexion/deb.php');
@@ -126,13 +126,13 @@ if (count($resultat)==0){
     echo "</script>";
     echo 'Pas de plan topo dans le pÈrimËtre sÈlectionnÈ';
 }elseif (count($resultat)==1){
-    $ch= "https://".$_SERVER['HTTP_HOST']."/apps/topo/topo.php?dess=../../doc_commune/".$resultat[0]['code_insee']."/dwf/".strtolower($resultat[0]['local1'])."/".strtolower($resultat[0]['fichier']);
+    $ch= "http://".$_SERVER['HTTP_HOST']."/apps/topo/topo.php?dess=../../doc_commune/".$resultat[0]['code_insee']."/dwf/".strtolower($resultat[0]['local1'])."/".strtolower($resultat[0]['fichier']);
     include($ch);
 }else{
       echo '<table><tr><th>Fichier</th><th>Date</th><th>Assainissement</th><th>AEP</th>';
       echo '<th>EP</th><th>Recolement</th><th>GÈomËtre</th></tr>';
       for ($j=0;$j<count($resultat);$j++){
-	     echo '<tr><td><a href="https://'.$_SERVER['HTTP_HOST'].'/apps/topo/topo.php?dess=../../doc_commune/'.$resultat[$j]['code_insee'].'/dwf/'.strtolower($resultat[$j]['local1']).'/'.strtolower($resultat[$j]['fichier']).'">'.$resultat[$j]['fichier'].'.dwg</a></td>';
+	     echo '<tr><td><a href="http://'.$_SERVER['HTTP_HOST'].'/apps/topo/topo.php?dess=../../doc_commune/'.$resultat[$j]['code_insee'].'/dwf/'.strtolower($resultat[$j]['local1']).'/'.strtolower($resultat[$j]['fichier']).'">'.$resultat[$j]['fichier'].'.dwg</a></td>';
 		 echo '<td>'.$resultat[$j]['dat'].'</td>';
 		 echo '<td>'.$resultat[$j]['ass'].'</td>';
 		 echo '<td>'.$resultat[$j]['aep'].'</td>';

@@ -222,7 +222,7 @@ $data.="<text pointer-events=\"none\" x=\"735\" y=\"19\" class=\"fillfonce\" sty
 	else
 	{
 	
-	$url="https://".$_SERVER['HTTP_HOST']."/interface/crea_fond_carte_svg.php?codeinsee=".$_SESSION["profil"]->insee;
+	$url="http://".$_SERVER['HTTP_HOST']."/interface/crea_fond_carte_svg.php?codeinsee=".$_SESSION["profil"]->insee;
 	$contenu=file($url);
        		while (list($ligne,$cont)=each($contenu)){
 			$numligne[$ligne]=$cont;

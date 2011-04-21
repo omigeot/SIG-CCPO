@@ -7,7 +7,7 @@ $insee = $_SESSION['profil']->insee;
 $appli = $_SESSION['profil']->appli;
 
 if ((!$_SESSION['profil']->idutilisateur)){
-	die("Point d'entr&eacute;e r&eacute;glement&eacute;.<br> Accs interdit. <br>Veuillez vous connecter via <a href=\"https://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('https://".$_SERVER['HTTP_HOST']."')\",3000)</SCRIPT>");
+	die("Point d'entr&eacute;e r&eacute;glement&eacute;.<br> Accs interdit. <br>Veuillez vous connecter via <a href=\"http://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('http://".$_SERVER['HTTP_HOST']."')\",3000)</SCRIPT>");
 }*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">

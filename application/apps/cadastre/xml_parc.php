@@ -39,7 +39,7 @@ $insee = $_SESSION['profil']->insee;
 $appli = $_SESSION['profil']->appli;
 
 if ((!$_SESSION['profil']->acces_ssl) || !in_array ("cadastre", $_SESSION['profil']->liste_appli)){
-	die("Point d'entrée réglementé.<br> Accès interdit. <br>Veuillez vous connecter via <a href=\"https://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('https://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
+	die("Point d'entrée réglementé.<br> Accès interdit. <br>Veuillez vous connecter via <a href=\"http://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('http://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
 }
 if (isset($_GET["commune"]))
   {

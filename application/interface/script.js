@@ -2744,7 +2744,7 @@ function validepoly(evt)
 	{
 		polyg="0 0,1 1";
 	}
-var url="https://"+serveur+url_polygo+"?polygo="+polyg+","+polyfin+"&sessionname=" + sessionname + "&sessionid=" + sessionid;
+var url="http://"+serveur+url_polygo+"?polygo="+polyg+","+polyfin+"&sessionname=" + sessionname + "&sessionid=" + sessionid;
 var zer="livalidepolygo";
 var param="_blank";
 ouvrepage(url,param,zer);
@@ -2929,7 +2929,7 @@ function ouv_appli(bou,x,y,ul)
 		var zer="liappli"+bou;
 		if(y==1)
 		{
-			var url="https://"+serveur+"/"+ul;
+			var url="http://"+serveur+"/"+ul;
 			var param="_blank";
 ouvrepage(url,param,zer);
 		}

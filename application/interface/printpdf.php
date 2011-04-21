@@ -37,7 +37,7 @@ include_once(GIS_ROOT . '/inc/common.php');
 gis_session_start();
 error_reporting (1);
 $extra_url = "&user=".$DB->db_user."&password=".$DB->db_passwd."&dbname=".$DB->db_name."&host=".$DB->db_host;
-//$url_qrcode="https://".$_SERVER["HTTP_HOST"]."/interface/printpdf.php?format=".$_GET['format']."&legende=".$_GET['legende']."&titre=".$_GET['titre']."&raster=".$_GET['raster']."&x=".$_GET['x']."&y=".$_GET['y']."&lar=".$_GET['lar']."&hau=".$_GET['hau']."&zoom=".$_GET['zoom']."&xini=".$_GET['xini']."&yini=".$_GET['yini']."&parce=".$_GET['parce']."&echelle=".$_GET['echelle'];
+//$url_qrcode="http://".$_SERVER["HTTP_HOST"]."/interface/printpdf.php?format=".$_GET['format']."&legende=".$_GET['legende']."&titre=".$_GET['titre']."&raster=".$_GET['raster']."&x=".$_GET['x']."&y=".$_GET['y']."&lar=".$_GET['lar']."&hau=".$_GET['hau']."&zoom=".$_GET['zoom']."&xini=".$_GET['xini']."&yini=".$_GET['yini']."&parce=".$_GET['parce']."&echelle=".$_GET['echelle'];
 
 
 
@@ -703,7 +703,7 @@ if ($print_basic_copyright)
   $pdf->RotatedText(5, 5, "Les photographies sont propriétées de l'IGN, les données cadastrales sont propriétées de la DGI. Reproduction interdite.",0);
 }
 //génération du qrcode;
-$url_qrcode="https://".$_SERVER["HTTP_HOST"]."/interface/qrprint.php?var=".$application."$".$_GET['x']."$".$_GET['y']."$".$_GET['lar']."$".$_GET['hau']."$".$_GET['zoom']."$".$_GET['format']."$".$_GET['legende']."$".$_GET['titre']."$".$_GET['echelle']."$".$_GET['parce']."$".$_GET['raster'];
+$url_qrcode="http://".$_SERVER["HTTP_HOST"]."/interface/qrprint.php?var=".$application."$".$_GET['x']."$".$_GET['y']."$".$_GET['lar']."$".$_GET['hau']."$".$_GET['zoom']."$".$_GET['format']."$".$_GET['legende']."$".$_GET['titre']."$".$_GET['echelle']."$".$_GET['parce']."$".$_GET['raster'];
 
 $pdf->Image(generateQRCode($url_qrcode,100) ,$xqrcode, $yqrcode, 30, 30, 'PNG'); 
 

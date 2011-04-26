@@ -1,0 +1,5 @@
+RewriteEngine on
+#RewriteBase /
+#RewriteRule ^dia(.+)$ https://%{HTTP_HOST}/apps/dia$1 [L]
+#RewriteRule .https://wwww.pays.meaux.fr/$
+RewriteRule ([A-Za-z]+)/([A-Za-z\ ]+)$ /redirection.php?commune=$1&appli=$2

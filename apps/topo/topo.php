@@ -40,7 +40,7 @@ $insee = $_SESSION['profil']->insee;
 $appli = $_SESSION['profil']->appli;
 //print_r ($_SESSION['profil']->liste_appli);
 /*if ((!$_SESSION['profil']->acces_ssl) || !in_array ("Plan geometre", $_SESSION['profil']->liste_appli)){
-	die("Point d'entr&eacute;e r&eacute;glement&eacute;.<br> Acc&egrave;s interdit. <br>Veuillez vous connecter via <a href=\"https://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('https://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
+	die("Point d'entr&eacute;e r&eacute;glement&eacute;.<br> Acc&egrave;s interdit. <br>Veuillez vous connecter via <a href=\"http://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('http://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
 }*/
 //session_start();
 //include('../connexion/deb.php');
@@ -72,7 +72,11 @@ if (eregi('MSIE', $_SERVER['HTTP_USER_AGENT']))
 
 classid = "clsid:A662DA7E-CCB7-4743-B71A-D817F6D575DF"
 
+<<<<<<< HEAD
+CODEBASE="http://<?php echo $_SERVER['HTTP_HOST'];?>/addons/DwfViewerSetup.cab"
+=======
 CODEBASE="https://<?php echo $_SERVER['HTTP_HOST'];?>/addons/DwfViewerSetup.cab"
+>>>>>>> gh/master
 border = "1"
 width = "90%"
 height = "90%">

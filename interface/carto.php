@@ -642,7 +642,7 @@ window.location.replace(url);
 }
 else
 {
-var url="https://<?php echo $serveur;?>/"+vale[2];
+var url="http://<?php echo $serveur;?>/"+vale[2];
 window.open(url);
 document.getElementById( "choixappli" ).options.selectedIndex=index_appli;
 }
@@ -695,7 +695,7 @@ if($appia=="true") { ?>
 <?php if($nav==0){
 echo "<div style=\"position:absolute;left:300px;top:300px;width:200px;height:200px;z-index:2;\">
 <p align=\"center\">Pour utiliser la cartographie</p>
-<p align=\"center\"> Vous devez installer le plugin <a href=\"https://".$_SERVER['HTTP_HOST']."/addons/SVGView303.exe\">Adobe SVGviewer</a></p>
+<p align=\"center\"> Vous devez installer le plugin <a href=\"http://".$_SERVER['HTTP_HOST']."/addons/SVGView303.exe\">Adobe SVGviewer</a></p>
 </div>";}
 /*ajout du div pour l'appli droit de cité qui peut être supprimé si on ne desire pas s'interfacer avec cette appli*/
 if($appia=="true") { ?>

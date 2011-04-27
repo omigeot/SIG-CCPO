@@ -19,8 +19,8 @@ PRINCIPALES MODIFICATIONS
   en une seule branche, nommée "application".
 
 * Rationalisation des inclusions. Les fichiers PHP 
-  partagés se trouvent dans /inc, les fichiers appellés à être 
-  modifiés à l'installation sont dans /conf.
+  partagés se trouvent dans /inc, les fichiers appellés à  être 
+  modifiés Ã  l'installation sont dans /conf.
 
 * Modularisation des routines de base de données. /inc/database.php 
   définit désormais une classe (DBpg) et une variable globale ($DB) 
@@ -41,10 +41,10 @@ PRINCIPALES MODIFICATIONS
        - Le second, gis_init(), s'occupe en plus de vérifier 
        l'authentification et - en résumé - d'initialiser une nouvelle 
        session si besoin. Il ne doit être appellé QUE par les "points 
-       d'entrée" de l'utilisateur dans le système (carto.php, 
+       d'entrée" de l'utilisateur dans le systême (carto.php, 
        index.php, back_office.php, etc.).
 
-* L'authentification s'appuie désormais sur un système de "profils" 
+* L'authentification s'appuie désormais sur un systême de "profils" 
   (/inc/profiles.php). Ceux-ci dérivent d'une classe "Profile" et 
   implémentent divers mécanismes.
        - Tout d'abord, ils fournissent une fonction qui permet de tester 
@@ -55,7 +55,7 @@ PRINCIPALES MODIFICATIONS
        exemple, le "CertifiedProfile" (qui gère les authentifications 
        par certificat SSL) extrait le nom d'utilisateur du certificat. 
        Le profil par défaut (InternetProfile) positionne automatiquement 
-       le nom d'utilisateur à "Visiteur". Dans les cas qui s'y prête, 
+       le nom d'utilisateur Ã  "Visiteur". Dans les cas qui s'y prêtent, 
        cette étape récupère aussi le mot de passe.
        - Enfin, ils vérifient par le moyen adéquat que l'utilisateur 
        est bien ce qu'il prétend. Dans le cas d'un certificat client, 
@@ -80,7 +80,7 @@ PRINCIPALES MODIFICATIONS
   dans /apps. L'idée serait, à terme, de mettre en place une inter-
   face commune aux différentes applications pour permettre l'ajout
   et la suppression "simple" de tels composants. Typiquement, une
-  application devrait être capable de renseigner d'elle-même
+  application devrait àtre capable de renseigner d'elle-même
   les tables utiles (permissions, etc.).
 
 * Transfert des notions de commune par défaut et d'application 

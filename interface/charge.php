@@ -6,31 +6,31 @@ sig@meaux.fr
 
 Ce logiciel est un programme informatique fournissant une interface cartographique WEB communale. 
 
-Ce logiciel est régi par la licence CeCILL-C soumise au droit français et
+Ce logiciel est rÃ©gi par la licence CeCILL-C soumise au droit franÃ§ais et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
-de la licence CeCILL-C telle que diffusée par le CEA, le CNRS et l'INRIA 
+de la licence CeCILL-C telle que diffusÃ©e par le CEA, le CNRS et l'INRIA 
 sur le site "http://www.cecill.info".
 
-En contrepartie de l'accessibilité au code source et des droits de copie,
-de modification et de redistribution accordés par cette licence, il n'est
-offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
-seule une responsabilité restreinte pèse sur l'auteur du programme,  le
-titulaire des droits patrimoniaux et les concédants successifs.
+En contrepartie de l'accessibilitÃ© au code source et des droits de copie,
+de modification et de redistribution accordÃ©s par cette licence, il n'est
+offert aux utilisateurs qu'une garantie limitÃ©e.  Pour les mÃªmes raisons,
+seule une responsabilitÃ© restreinte pÃ¨se sur l'auteur du programme,  le
+titulaire des droits patrimoniaux et les concÃ©dants successifs.
 
-A cet égard  l'attention de l'utilisateur est attirée sur les risques
-associés au chargement,  à l'utilisation,  à la modification et/ou au
-développement et à la reproduction du logiciel par l'utilisateur étant 
-donné sa spécificité de logiciel libre, qui peut le rendre complexe à 
-manipuler et qui le réserve donc à des développeurs et des professionnels
-avertis possédant  des connaissances  informatiques approfondies.  Les
-utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
-logiciel à leurs besoins dans des conditions permettant d'assurer la
-sécurité de leurs systèmes et ou de leurs données et, plus généralement, 
-à l'utiliser et l'exploiter dans les mêmes conditions de sécurité. 
+A cet Ã©gard  l'attention de l'utilisateur est attirÃ©e sur les risques
+associÃ©s au chargement,  Ã  l'utilisation,  Ã  la modification et/ou au
+dÃ©veloppement et Ã  la reproduction du logiciel par l'utilisateur Ã©tant 
+donnÃ© sa spÃ©cificitÃ© de logiciel libre, qui peut le rendre complexe Ã  
+manipuler et qui le rÃ©serve donc Ã  des dÃ©veloppeurs et des professionnels
+avertis possÃ©dant  des connaissances  informatiques approfondies.  Les
+utilisateurs sont donc invitÃ©s Ã  charger  et  tester  l'adÃ©quation  du
+logiciel Ã  leurs besoins dans des conditions permettant d'assurer la
+sÃ©curitÃ© de leurs systÃ¨mes et ou de leurs donnÃ©es et, plus gÃ©nÃ©ralement, 
+Ã  l'utiliser et l'exploiter dans les mÃªmes conditions de sÃ©curitÃ©. 
 
-Le fait que vous puissiez accéder à cet en-tête signifie que vous avez 
-pris connaissance de la licence CeCILL-C, et que vous en avez accepté les 
+Le fait que vous puissiez accÃ©der Ã  cet en-tÃªte signifie que vous avez 
+pris connaissance de la licence CeCILL-C, et que vous en avez acceptÃ© les 
 termes.*/
 //if($_GET['sansplug']=='true')
 //if($nav!=0)
@@ -41,7 +41,15 @@ header("Content-type: text/xml");
 define('GIS_ROOT', '..');
 include_once(GIS_ROOT . '/inc/common.php');
 gis_session_start();
+
+
+$map_mode = 1; // omigeot: ce param sert a determiner si mapserv renvoit une image ou un chemin. Par defaut (CAPM) c'est 0, sinon 1 (CCPO)
+
+
 $extra_url = "&user=".$DB->db_user."&password=".$DB->db_passwd."&dbname=".$DB->db_name."&host=".$DB->db_host;
+if ($map_mode)
+        $extra_url .= "&mode=map";
+
 $_SESSION['zoommm'] =$_GET['zoom'];
 $_SESSION['cx'] =round($_GET["x"]+($_GET["lar"]/2));
 $_SESSION['cy'] =round( $_GET["y"]+( $_GET["hau"]/2));
@@ -82,15 +90,25 @@ if(substr($_SESSION['profil']->insee, -3)=='000')
 	{
 	$url="http://".$serv."/cgi-bin/mapserv?map=".$fs_root."capm/".$application.".map&map_imagetype=agg&insee=".$_SESSION['profil']->insee."&layer=".$raster."&minx=".$xm."&miny=".$ym."&maxx=".$xma."&maxy=".$yma."&mapsize=1200%20840&parce=('')".$extra_url;
 	}
-	$contenu=file($url);
-       		while (list($ligne,$cont)=each($contenu)){
-			$numligne[$ligne]=$cont;
-		}
-		$texte=$contenu[$ms_dbg_line];
-		$image=explode('/',$texte);
-		$conte1=explode('.',$image[4]);
-		$image=$conte1[0];
-	
+if ($map_mode) {
+        $image = "msnew-" .md5($url);
+        if (!file_exists($fs_root."/tmp/".$image . ".jpg"))
+        {
+                $contenu = file_get_contents($url.$extra_url);
+                $fd = fopen($fs_root."/tmp/".$image . ".jpg" ,'w');
+                fwrite($fd,$contenu);
+                fclose($fd);
+        }
+} else {
+        $contenu=file($url);
+                while (list($ligne,$cont)=each($contenu)){
+                        $numligne[$ligne]=$cont;
+                }
+                $texte=$contenu[$ms_dbg_line];
+                $image=explode('/',$texte);
+                $conte1=explode('.',$image[4]);
+                $image=$conte1[0];
+}
 		$textq.="<g id='".$_GET['layer']."' n='../tmp/".$image.".jpg'>\n";
 		//$da=date("His");
 		//$textq.="<image id='ima' x='". $_GET["x"]."' y='". $_GET["y"]."' width='". $_GET["lar"]."' height='". $_GET["hau"]."' ></image>";
@@ -108,15 +126,15 @@ $rast=utf8_decode( $_GET["raster"]);
 }
 if($nav=="1")
 {
-$rast=str_replace("chr(224)","à",$_GET["raster"]);
-$rast=str_replace("chr(233)","é",$rast);
-$rast=str_replace("chr(232)","è",$rast);
-$rast=str_replace("chr(234)","ê",$rast);
-$rast=str_replace("chr(226)","â",$rast);
-$rast=str_replace("chr(231)","ç",$rast);
-$rast=str_replace("chr(244)","ô",$rast);
-$rast=str_replace("chr(238)","î",$rast);
-$rast=str_replace("chr(251)","û",$rast);
+$rast=str_replace("chr(224)","Ã ",$_GET["raster"]);
+$rast=str_replace("chr(233)","Ã©",$rast);
+$rast=str_replace("chr(232)","Ã¨",$rast);
+$rast=str_replace("chr(234)","Ãª",$rast);
+$rast=str_replace("chr(226)","Ã¢",$rast);
+$rast=str_replace("chr(231)","Ã§",$rast);
+$rast=str_replace("chr(244)","Ã´",$rast);
+$rast=str_replace("chr(238)","Ã®",$rast);
+$rast=str_replace("chr(251)","Ã»",$rast);
 $rast=str_replace("chr(60)","<",$rast);
 $rast=str_replace("chr(62)",">",$rast);
 $rast=str_replace("chr(63)","?",$rast);

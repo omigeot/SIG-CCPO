@@ -96,7 +96,7 @@ header("Pragma:");
 
 function get_full_url($http=0,$https=0) // Retourne l'URL vers la page courante, paramètres inclus.
 {
-  $res =  "https://".$_SERVER['HTTP_HOST'];
+  $res =  "http://".$_SERVER['HTTP_HOST'];
   $ssl=1;
   //$res = get_root_url($http,$https);
   $script_name = '';

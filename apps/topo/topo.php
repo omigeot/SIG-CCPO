@@ -72,7 +72,11 @@ if (eregi('MSIE', $_SERVER['HTTP_USER_AGENT']))
 
 classid = "clsid:A662DA7E-CCB7-4743-B71A-D817F6D575DF"
 
+<<<<<<< HEAD
 CODEBASE="http://<?php echo $_SERVER['HTTP_HOST'];?>/addons/DwfViewerSetup.cab"
+=======
+CODEBASE="https://<?php echo $_SERVER['HTTP_HOST'];?>/addons/DwfViewerSetup.cab"
+>>>>>>> gh/master
 border = "1"
 width = "90%"
 height = "90%">

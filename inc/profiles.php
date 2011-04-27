@@ -230,6 +230,84 @@ class Profile {
 
 // FIN DU PROFIL DE BASE
 
+class BasicProfile extends Profile {
+  var $user;
+  var $pass;
+
+  function __construct($appli='')
+  {
+    parent::__construct("basic");
+    $this->appli = $appli;
+    $this->protocol = 'http';
+  }
+
+  function is_identified()
+  {
+    if (!$this->user)
+      {
+        $this->user = $_POST['form_user'];
+        $this->pass = $_POST['form_pass'];
+        if ($this->user) // Cette partie correspond à auth()
+          {
+            return 1;
+          }
+        else // Cette partie correspond à ident() (du moins à sa première phase)
+          {
+                        p_identifi();
+          }
+    }
+  }
+
+  function getUserName()
+  {
+    return $this->user;
+  }
+
+  function ok($insee="",$appli="",$action="")
+  {
+   return 1;
+  }
+
+  function is_authentified()
+  {
+    global $DB;
+
+    $res = $DB->tab_result("SELECT * FROM admin_svg.utilisateur WHERE login = '".$this->user."' AND psw = '".$this->pass."';");
+
+    if (count($res) == 0)
+      {
+        return 0;
+      }
+    else
+      {
+        $this->insee = $res[0]['idcommune'];
+        $this->idutilisateur = $res[0]['idutilisateur'];
+        $this->droit = $res[0]['droit'];
+        $this->droit_appli = "";
+        $this->acces_ssl = true;
+
+$res1 = pg_query($DB->con,"select application.libelle_appli,apputi.droit from admin_svg.application inner join admin_svg.apputi on admin_svg.application.idapplication=admin_svg.apputi.idapplication join admin_svg.utilisateur on admin_svg.apputi.idutilisateur=admin_svg.utilisateur.idutilisateur where apputi.idutilisateur='".$res[0]['idutilisateur']."' order by application.type_appli asc;");
+        $this->liste_appli = pg_fetch_all_columns($res1,0);
+        $this->appli_droit = pg_fetch_all_columns($res1,1);
+
+        $this->roles[] = 2;
+        if ($res[0]['droit'] == 'AD') // FIXME: affiner la gestion des droits
+          $this->roles[] = 1;
+        return 1;
+      }
+  }
+
+  function matches()
+  {
+	return 1;
+  }
+
+}
+
+
+/////////////////////////////////////////////
+
+
 class InternetProfile extends Profile {
   var $guestname;
  

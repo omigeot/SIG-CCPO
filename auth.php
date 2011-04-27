@@ -59,11 +59,12 @@ function selectprofile($prof)
 function buildprofiles() // Attention : ici les profils potentiels sont vérifiés en ordre inverse d'insertion.
 {
   $profiles = array();
-  $profiles[] = new InternetProfile("Visiteur");
+  $profiles[] = new BasicProfile();
+  //  $profiles[] = new InternetProfile("Visiteur");
   //  $profiles[] = new TestingProfile("OM");
-  $profiles[] = new IntranetProfile();
-  $profiles[] = new urbaProfile();
-  //$profiles[] = new CertifiedProfile();
+  //  $profiles[] = new IntranetProfile();
+  //  $profiles[] = new urbaProfile();
+  //  $profiles[] = new CertifiedProfile();
   return $profiles;
 }
 

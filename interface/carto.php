@@ -112,6 +112,14 @@ if($_SESSION['profil']->idutilisateur)
 		$_SESSION["profil"]->droit_appli=$mn_droit[0]['droit'];
 	}
 }
+
+if (!$_SESSION['profil']->idutilisateur)
+{
+	header('Location: /auth.php');
+	die();
+}
+
+
 $sql_pref="select * from admin_svg.preference where utilisateur=".$_SESSION['profil']->idutilisateur;
 $pref=$DB->tab_result($sql_pref);
 

@@ -5,31 +5,31 @@ sig@meaux.fr
 
 Ce logiciel est un programme informatique fournissant une interface cartographique WEB communale. 
 
-Ce logiciel est r�gi par la licence CeCILL-C soumise au droit fran�ais et
+Ce logiciel est régi par la licence CeCILL-C soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
-de la licence CeCILL-C telle que diffus�e par le CEA, le CNRS et l'INRIA 
+de la licence CeCILL-C telle que diffusée par le CEA, le CNRS et l'INRIA 
 sur le site "http://www.cecill.info".
 
-En contrepartie de l'accessibilit� au code source et des droits de copie,
-de modification et de redistribution accord�s par cette licence, il n'est
-offert aux utilisateurs qu'une garantie limit�e.  Pour les m�mes raisons,
-seule une responsabilit� restreinte p�se sur l'auteur du programme,  le
-titulaire des droits patrimoniaux et les conc�dants successifs.
+En contrepartie de l'accessibilité au code source et des droits de copie,
+de modification et de redistribution accordés par cette licence, il n'est
+offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+seule une responsabilité restreinte pose sur l'auteur du programme,  le
+titulaire des droits patrimoniaux et les concédants successifs.
 
-A cet �gard  l'attention de l'utilisateur est attir�e sur les risques
-associ�s au chargement,  � l'utilisation,  � la modification et/ou au
-d�veloppement et � la reproduction du logiciel par l'utilisateur �tant 
-donn� sa sp�cificit� de logiciel libre, qui peut le rendre complexe � 
-manipuler et qui le r�serve donc � des d�veloppeurs et des professionnels
-avertis poss�dant  des connaissances  informatiques approfondies.  Les
-utilisateurs sont donc invit�s � charger  et  tester  l'ad�quation  du
-logiciel � leurs besoins dans des conditions permettant d'assurer la
-s�curit� de leurs syst�mes et ou de leurs donn�es et, plus g�n�ralement, 
-� l'utiliser et l'exploiter dans les m�mes conditions de s�curit�. 
+A cet égard  l'attention de l'utilisateur est attirée sur les risques
+associés au chargement,  à l'utilisation,  à la modification et/ou au
+développement et à la reproduction du logiciel par l'utilisateur étant 
+donnée sa spécificité de logiciel libre, qui peut le rendre complexe à 
+manipuler et qui le réserve donc à des développeurs et des professionnels
+avertis possédant  des connaissances  informatiques approfondies.  Les
+utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+logiciel à leurs besoins dans des conditions permettant d'assurer la
+sécurité de leurs systèmes et ou de leurs données et, plus généralement, 
+à l'utiliser et l'exploiter dans les mêmes conditions de sécurité. 
 
-Le fait que vous puissiez acc�der � cet en-t�te signifie que vous avez 
-pris connaissance de la licence CeCILL-C, et que vous en avez accept� les 
+Le fait que vous puissiez accéder à cet en-tête signifie que vous avez 
+pris connaissance de la licence CeCILL-C, et que vous en avez accepté les 
 termes.*/
 define('GIS_ROOT', '../..');
 include_once(GIS_ROOT . '/inc/common.php');
@@ -38,31 +38,35 @@ gis_session_start();
 $insee = $_SESSION['profil']->insee;
 $appli = $_SESSION['profil']->appli;
 
-if ((!$_SESSION['profil']->acces_ssl) || !in_array ("cadastre", $_SESSION['profil']->liste_appli)){
-	die("Point d'entr�e r�glement�.<br> Acc�s interdit. <br>Veuillez vous connecter via <a href=\"https://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('https://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
-}
+check_access('admin');
+
+//if ((!$_SESSION['profil']->acces_ssl) || !in_array ("cadastre", $_SESSION['profil']->liste_appli)){
+//	die("Point d'entrée réglementé.<br> Accés interdit. <br>Veuillez vous connecter via <a href=\"http://".$_SERVER['HTTP_HOST']."\">serveur carto</a><SCRIPT language=javascript>setTimeout(\"window.location.replace('http://".$_SERVER['HTTP_HOST']."')\",5000)</SCRIPT>");
+//
+//}
 if ($_SESSION["profil"]->droit=='AD'){
 //include("../connexion/deb.php");
-if ($_GET["act"]=="sup"){
-	$guer="delete from admin_svg.apputi where idutilisateur='".$_GET["ide"]."'";
-	$DB->tab_result($guer);
-	$quer="delete from admin_svg.utilisateur where idutilisateur='".$_GET["ide"]."'";
-	$DB->tab_result($quer);
-}elseif ($_GET["act"]=="ins"){
-	$quer="insert into admin_svg.utilisateur (idutilisateur,login,psw,droit,idcommune,nom,prenom,email)
- values(nextval('admin_svg.util'),'".$_GET["log"]."','".$_GET["psw"]."','".$_GET["droitu"]."','".$_GET["commune"]."',".ivar($_GET["nomu"]).",".ivar($_GET["prenomu"]).",".ivar($_GET["emailu"]).")";
-	$DB->tab_result($quer);
-}elseif ($_GET["act"]=="mod"){
-	$quer="update admin_svg.utilisateur set login='".$_GET["log"]."', psw='".$_GET["psw"]."', droit='".$_GET["droitu"]."', idcommune='".$_GET["commune"]."' where idutilisateur='".$_GET["ide"]."'";
-	$DB->tab_result($quer);
-}elseif ($_GET["act"]=="mail"){
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-	$headers .= "From:".$adresse_admin. "\r\n";
-    for ($p=0;$p<count($_GET["email"]);$p++){
-       $sql="select * from admin_svg.utilisateur where idutilisateur='".$_GET["email"][$p]."'";
-       $rsql=$DB->tab_result($sql);
-    $corps="<CENTER>
+if ($_GET["act"]) {
+	if ($_GET["act"]=="sup"){
+		$guer="delete from admin_svg.apputi where idutilisateur='".$_GET["ide"]."'";
+		$DB->tab_result($guer);
+		$quer="delete from admin_svg.utilisateur where idutilisateur='".$_GET["ide"]."'";
+		$DB->tab_result($quer);
+	}elseif ($_GET["act"]=="ins"){
+		$quer="insert into admin_svg.utilisateur (idutilisateur,login,psw,droit,idcommune,nom,prenom,email)
+	 		values(nextval('admin_svg.util'),'".$_GET["log"]."','".$_GET["psw"]."','".$_GET["droitu"]."','".$_GET["commune"]."',".ivar($_GET["nomu"]).",".ivar($_GET["prenomu"]).",".ivar($_GET["emailu"]).")";
+		$DB->tab_result($quer);
+	}elseif ($_GET["act"]=="mod"){
+		$quer="update admin_svg.utilisateur set login='".$_GET["log"]."', psw='".$_GET["psw"]."', droit='".$_GET["droitu"]."', idcommune='".$_GET["commune"]."' where idutilisateur='".$_GET["ide"]."'";
+		$DB->tab_result($quer);
+	}elseif ($_GET["act"]=="mail"){
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= "From:".$adresse_admin. "\r\n";
+		for ($p=0;$p<count($_GET["email"]);$p++){
+			$sql="select * from admin_svg.utilisateur where idutilisateur='".$_GET["email"][$p]."'";
+			$rsql=$DB->tab_result($sql);
+			$corps="<CENTER>
 <P><IMG id=ridImg height=102 src='http://www.pays.meaux.fr/logo/770284.png' width=355 align=middle>
 </P></CENTER>
 <P><FONT size=5><STRONG>Direction de l'urbanisme et du d�veloppement durable</STRONG></FONT></P>
@@ -74,9 +78,13 @@ if ($_GET["act"]=="sup"){
 <P>login : ".$rsql[0]["login"]."     </P>
 <P>mot de passe :  ".$rsql[0]["psw"]."   </P>
 ";
-	   mail($rsql[0]["email"],"Acc�s SIG","<html><body>".$corps."</body></html>",$headers);
-    }
+			mail($rsql[0]["email"],"Acc�s SIG","<html><body>".$corps."</body></html>",$headers);
+    		}
+	}
+	header('Location: ./utilisateur.php');
+	die();
 }
+
 if ($_SESSION["profil"]->user=='sig1'){
    $gg=$DB->tab_result("select * from admin_svg.utilisateur order by login");
 	$list_commune=$DB->tab_result("select idcommune,nom from admin_svg.commune order by nom");
